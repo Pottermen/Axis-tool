@@ -1,0 +1,38 @@
+name: Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Restore dependencies
+      run: dotnet restore src/AxisConfigurator.sln
+
+    - name: Build solution
+      run: dotnet build src/AxisConfigurator.sln --configuration Release --no-restore
+
+    - name: Run tests
+      run: dotnet test tests/AxisConfigurator.Tests/AxisConfigurator.Tests.csproj --configuration Release --no-build --verbosity normal
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-artifacts
+        path: |
+          src/AxisConfigurator.App/bin/Release/
+          src/AxisConfigurator.Core/bin/Release/
+        retention-days: 30

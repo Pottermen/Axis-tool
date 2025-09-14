@@ -1,0 +1,22 @@
+# Code Owners for Axis Camera Configuration Tool
+
+# Global owners
+* @Pottermen
+
+# Core domain and services
+/src/AxisConfigurator.Core/ @Pottermen
+
+# WPF Application
+/src/AxisConfigurator.App/ @Pottermen
+
+# Tests
+/tests/ @Pottermen
+
+# Build and CI/CD
+/.github/ @Pottermen
+/build/ @Pottermen
+
+# Documentation
+/docs/ @Pottermen
+README.md @Pottermen
+CONTRIBUTING.md @Pottermen

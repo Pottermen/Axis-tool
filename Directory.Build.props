@@ -1,0 +1,16 @@
+<Project>
+
+  <PropertyGroup>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <Authors>Pottermen</Authors>
+    <Company>Pottermen</Company>
+    <Product>Axis Camera Configuration Tool</Product>
+    <Copyright>Copyright © Pottermen 2024</Copyright>
+    <AssemblyVersion>0.1.0.0</AssemblyVersion>
+    <FileVersion>0.1.0.0</FileVersion>
+    <Version>0.1.0</Version>
+  </PropertyGroup>
+
+</Project>

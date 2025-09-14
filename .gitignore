@@ -1,0 +1,46 @@
+# Build Outputs
+bin/
+obj/
+out/
+publish/
+
+# Visual Studio / Rider
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.userprefs
+*.sln.docstates
+
+# .NET
+*.swp
+*.*~
+project.lock.json
+.DS_Store
+*.pyc
+nupkg/
+
+# Test results
+TestResults/
+[Tt]est[Rr]esult*/
+*.trx
+*.coverage
+*.coveragexml
+
+# Logs
+logs/
+*.log
+
+# Packages
+packages/
+!packages/build/
+*.nupkg
+*.snupkg
+
+# WiX
+*.wixobj
+*.wixpdb
+
+# Artifacts
+artifacts/

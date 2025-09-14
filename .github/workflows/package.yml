@@ -1,0 +1,67 @@
+name: Package
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to build'
+        required: true
+        default: '0.1.0'
+
+jobs:
+  package:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Restore dependencies
+      run: dotnet restore src/AxisConfigurator.sln
+
+    - name: Build solution
+      run: dotnet build src/AxisConfigurator.sln --configuration Release --no-restore
+
+    - name: Run tests
+      run: dotnet test tests/AxisConfigurator.Tests/AxisConfigurator.Tests.csproj --configuration Release --no-build --verbosity normal
+
+    - name: Publish application
+      run: dotnet publish src/AxisConfigurator.App/AxisConfigurator.App.csproj --configuration Release --output ./publish --self-contained false
+
+    - name: Setup WiX Toolset
+      run: |
+        # TODO: Install WiX Toolset v5 when available
+        # For now, this is a placeholder for MSI packaging
+        echo "WiX Toolset installation placeholder"
+
+    - name: Build MSI package
+      run: |
+        # TODO: Build MSI package using WiX
+        # This will be implemented in a future iteration
+        echo "MSI packaging placeholder - artifacts will be created manually for now"
+
+    - name: Upload application artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: application-${{ github.event.inputs.version || github.ref_name }}
+        path: ./publish/
+        retention-days: 90
+
+    - name: Create Release
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: false
+        prerelease: false

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+  WiX Product Definition for Axis Camera Configuration Tool
+  TODO: Complete MSI packaging implementation in future iteration
+  TODO: Add component harvesting for application files
+  TODO: Implement code signing for release builds
+-->
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Product Id="*" 
+           Name="Axis Camera Configuration Tool" 
+           Language="1033" 
+           Version="0.1.0.0" 
+           Manufacturer="Pottermen" 
+           UpgradeCode="12345678-1234-1234-1234-123456789012">
+    
+    <Package InstallerVersion="200" 
+             Compressed="yes" 
+             InstallScope="perMachine" />
+
+    <!-- Major upgrade configuration -->
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    
+    <!-- Media definition -->
+    <MediaTemplate EmbedCab="yes" />
+
+    <!-- Feature definition -->
+    <Feature Id="ProductFeature" Title="Axis Camera Configuration Tool" Level="1">
+      <!-- TODO: Add ComponentGroupRef for application files -->
+      <!-- <ComponentGroupRef Id="ProductComponents" /> -->
+    </Feature>
+  </Product>
+
+  <!-- Directory structure -->
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLFOLDER" Name="Axis Camera Configuration Tool" />
+      </Directory>
+    </Directory>
+  </Fragment>
+
+  <!-- Components -->
+  <Fragment>
+    <!-- TODO: Define component group for application files -->
+    <!--
+    <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <Component Id="ProductComponent">
+        <File Source="$(var.AxisConfigurator.App.TargetPath)" />
+      </Component>
+    </ComponentGroup>
+    -->
+  </Fragment>
+</Wix>
