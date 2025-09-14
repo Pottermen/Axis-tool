@@ -21,10 +21,11 @@
     <ProjectReference Include="..\AxisConfigurator.Core\AxisConfigurator.Core.csproj" />
   </ItemGroup>
 
+  <!-- Ensure appsettings.json is always copied to the output directory -->
   <ItemGroup>
-    <None Update="appsettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <Content Include="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>
