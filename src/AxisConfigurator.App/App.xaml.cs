@@ -16,7 +16,7 @@ public partial class App : Application
 {
     private IHost? _host;
 
-    protected override void OnStartup(StartupEventArgs e)
+    protected override async void OnStartup(StartupEventArgs e)
     {
         _host = Host.CreateDefaultBuilder()
             .UseSerilogLogging()
@@ -40,15 +40,21 @@ public partial class App : Application
             })
             .Build();
 
+        await _host.StartAsync();
+
         var mainWindow = _host.Services.GetRequiredService<MainWindow>();
         mainWindow.Show();
 
         base.OnStartup(e);
     }
 
-    protected override void OnExit(ExitEventArgs e)
+    protected override async void OnExit(ExitEventArgs e)
     {
-        _host?.Dispose();
+        if (_host != null)
+        {
+            await _host.StopAsync();
+            _host.Dispose();
+        }
         base.OnExit(e);
     }
 }
