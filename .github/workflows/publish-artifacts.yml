@@ -1,0 +1,53 @@
+name: Publish Windows Artifacts (AxisConfigurator.App)
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  publish:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
+
+      - name: Restore
+        run: dotnet restore src/AxisConfigurator.sln
+
+      - name: Publish (Framework-dependent)
+        run: >
+          dotnet publish src/AxisConfigurator.App/AxisConfigurator.App.csproj
+          -c Release -r win-x64 --self-contained false -o artifacts/win-x64-fd
+
+      - name: Publish (Self-contained)
+        run: >
+          dotnet publish src/AxisConfigurator.App/AxisConfigurator.App.csproj
+          -c Release -r win-x64 --self-contained true -o artifacts/win-x64-sc
+
+      - name: Validate outputs
+        shell: pwsh
+        run: |
+          $paths = @("artifacts/win-x64-fd", "artifacts/win-x64-sc")
+          foreach ($p in $paths) {
+            Write-Host "Validating $p"
+            if (-not (Test-Path "$p/AxisConfigurator.App.exe")) { Write-Error "Missing AxisConfigurator.App.exe in $p"; exit 1 }
+            if (-not (Test-Path "$p/appsettings.json")) { Write-Error "Missing appsettings.json in $p"; exit 1 }
+          }
+
+      - name: Upload artifact (Framework-dependent)
+        uses: actions/upload-artifact@v4
+        with:
+          name: AxisConfigurator.App-win-x64-framework-dependent
+          path: artifacts/win-x64-fd
+
+      - name: Upload artifact (Self-contained)
+        uses: actions/upload-artifact@v4
+        with:
+          name: AxisConfigurator.App-win-x64-self-contained
+          path: artifacts/win-x64-sc
