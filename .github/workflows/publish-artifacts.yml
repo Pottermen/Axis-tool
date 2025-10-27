@@ -41,13 +41,13 @@ jobs:
           }
 
       - name: Upload artifact (Framework-dependent)
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: AxisConfigurator.App-win-x64-framework-dependent
           path: artifacts/win-x64-fd
 
       - name: Upload artifact (Self-contained)
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: AxisConfigurator.App-win-x64-self-contained
           path: artifacts/win-x64-sc

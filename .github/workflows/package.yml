@@ -49,7 +49,7 @@ jobs:
         echo "MSI packaging placeholder - artifacts will be created manually for now"
 
     - name: Upload application artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: application-${{ github.event.inputs.version || github.ref_name }}
         path: ./publish/
